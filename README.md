@@ -115,14 +115,6 @@ Key prompt techniques used:
 
 ---
 
-## ⚠️ Important Notes
-
-- Add `.env` to `.gitignore` — never commit your API key
-- The `/analyze` endpoint has no rate limiting — add one before going public
-- Results are AI-generated simulations, not scientific predictions
-
----
-
 ## 📄 License
 
 MIT — free to use, modify, and build upon.
