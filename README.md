@@ -8,7 +8,6 @@
 ## 🔗 Links
 - 🌐 **Live Demo:** https://carbonmirror.vercel.app
 - 📹 **Demo Video:** https://youtube.com/your-video-link
-- 📦 **GitHub:** https://github.com/YOUR_USERNAME/carbonmirror
 
 ---
 
