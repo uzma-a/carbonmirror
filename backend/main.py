@@ -5,13 +5,12 @@ from dotenv import load_dotenv
 import httpx, json, os, re
 
 load_dotenv(".env")
-load_dotenv(".env.example")
 
 app = FastAPI(title="CarbonMirror API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173","http://localhost:3000","https://your-domain.com"],
+    allow_origins=["http://localhost:5173","http://localhost:3000","https://carbonmirror.vercel.app/"],
     allow_methods=["POST","GET"],
     allow_headers=["*"],
 )
