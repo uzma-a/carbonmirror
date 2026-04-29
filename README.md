@@ -5,12 +5,6 @@
 
 ---
 
-## 🔗 Links
-- 🌐 **Live Demo:** https://carbonmirror.vercel.app
-- 📹 **Demo Video:** https://youtube.com/your-video-link
-
----
-
 ## 🏗️ Architecture
 
 ```
