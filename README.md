@@ -11,7 +11,7 @@
 Browser (React + Tailwind + Vite)
         ↓  POST /analyze
 FastAPI Backend (Python)
-        ↓  Gemma 3 12B API (Google AI Studio)
+        ↓  Gemma 4 12B API (Google AI Studio)
 Google Generative AI
         ↓  Structured JSON response
 React renders animated results
@@ -86,7 +86,7 @@ carbonmirror/
 
 ## 🤖 AI Model
 
-This project uses **Gemma 3 12B Instruct** (`gemma-3-12b-it`) via Google AI Studio.
+This project uses **Gemma 4 31B Instruct** (`gemma-4-31b-it`) via Google AI Studio.
 
 Key prompt techniques used:
 - **Role-based conversation turns** (`user` / `model`) for instruction-tuned models
@@ -102,7 +102,7 @@ Key prompt techniques used:
 |-------|-----------|
 | Frontend | React 18, Tailwind CSS, Vite |
 | Backend | FastAPI, Python 3.11 |
-| AI | Gemma 3 12B (Google AI Studio) |
+| AI | Gemma 4 31B (Google AI Studio) |
 | HTTP Client | httpx (async) |
 | Deployment | Vercel (frontend) + Railway (backend) |
 
