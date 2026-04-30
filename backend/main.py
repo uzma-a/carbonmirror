@@ -17,8 +17,8 @@ app.add_middleware(
 )
 
 GEMMA_API_KEY = os.getenv("GEMMA_API_KEY", "YOUR_GEMMA_API_KEY_HERE")
-# gemma-3-12b-it: fast enough to avoid timeouts, still high quality
-GEMMA_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemma-3-12b-it:generateContent"
+# gemma-4-31b-it: fast enough to avoid timeouts, still high quality
+GEMMA_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemma-4-31b-it:generateContent"
 
 class UserInput(BaseModel):
     city: str
@@ -125,7 +125,7 @@ async def call_gemma(data: UserInput) -> dict:
 
 @app.get("/")
 def health():
-    return {"status": "CarbonMirror API running", "model": "gemma-3-12b-it"}
+    return {"status": "CarbonMirror API running", "model": "gemma-4-31b-it"}
 
 
 @app.post("/analyze")
