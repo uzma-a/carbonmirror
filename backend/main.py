@@ -10,14 +10,14 @@ app = FastAPI(title="CarbonMirror API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
+
     allow_origins=["http://localhost:5173","http://localhost:3000","https://carbonmirror.vercel.app/", "*"],
     allow_methods=["POST","GET"],
     allow_headers=["*"],
 )
 
 GEMMA_API_KEY = os.getenv("GEMMA_API_KEY", "YOUR_GEMMA_API_KEY_HERE")
-# gemma-3-12b-it: fast enough to avoid timeouts, still high quality
-GEMMA_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemma-3-12b-it:generateContent"
+GEMMA_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemma-4-31b-it:generateContent"
 
 class UserInput(BaseModel):
     city: str
@@ -99,7 +99,7 @@ async def call_gemma(data: UserInput) -> dict:
     }
 
     try:
-        async with httpx.AsyncClient(timeout=120.0) as client:
+        async with httpx.AsyncClient(timeout=180.0) as client:
             resp = await client.post(
                 f"{GEMMA_API_URL}?key={GEMMA_API_KEY}",
                 json=payload,
@@ -124,7 +124,7 @@ async def call_gemma(data: UserInput) -> dict:
 
 @app.get("/")
 def health():
-    return {"status": "CarbonMirror API running", "model": "gemma-3-12b-it"}
+    return {"status": "CarbonMirror API running", "model": "gemma-4-31b-it"}
 
 
 @app.post("/analyze")
