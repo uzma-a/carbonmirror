@@ -5,17 +5,44 @@
 
 ---
 
+## 🚨 The Problem
+
+Climate change is the defining crisis of our generation. Yet despite decades of warnings, global emissions continue to rise. **The data is overwhelming — but the action is not.**
+
+Why? Because climate change feels abstract.
+
+People hear about rising temperatures, melting glaciers, and extreme weather events — but struggle to connect those global statistics to their own daily life. A graph showing "2°C of warming by 2040" does not tell a person in Delhi what their morning commute will feel like. It does not tell a family in Noida whether their tap water will run dry. It does not tell a student in Kashmir whether the rivers they grew up with will still exist.
+
+This emotional distance is not ignorance — **it is a failure of communication.**
+
+Research consistently shows that people respond to personal, vivid, local information far more than abstract global data. We act when we can imagine the consequences. We change when the future feels real.
+
+Today, climate communication fails this test. Reports are written for policymakers. Dashboards are built for scientists. The average person — the one whose daily choices actually drive emissions — has no tool that speaks directly to them, in the language of their own life.
+
+**The result? A gap between awareness and action.**
+
+---
+
+## 🌍 How CarbonMirror Helps
+
+CarbonMirror closes that gap by making climate change **personal, vivid, and impossible to ignore.**
+
+Instead of showing graphs and statistics, CarbonMirror asks six simple questions about your lifestyle — your city, how you travel, what you eat, how much electricity you use, your AC habits, and how often you fly. Then it uses **Gemma 4** to generate two vivid, emotionally engaging simulations of your life in 2040 — one if nothing changes, and one if you make realistic improvements.
+
+**Not a global prediction. Your prediction. Your city. Your future.**
+
+CarbonMirror directly addresses the **Global Resilience** track by enabling long-range climate mitigation through personalized behavioral awareness. By showing individuals their exact city's climate future in 2040, CarbonMirror anticipates and responds to one of the world's most pressing challenges — at the individual level, where real behavioral change begins.
+
+---
+
 ## 🏗️ Architecture
 
 ```
 Browser (React + Tailwind + Vite)
         ↓  POST /analyze
 FastAPI Backend (Python)
-
-        ↓  Gemma 4 E2B (Ollama — local inference)
-Local GPU/CPU
-        ↓  Gemma 4 12B API (Google AI Studio)
-Google Generative AI
+        ↓  Gemma 4 31B (HuggingFace Router — DeepInfra)
+HuggingFace Inference API
         ↓  Structured JSON response
 React renders animated staggered results
 ```
@@ -41,28 +68,20 @@ React renders animated staggered results
 ### Prerequisites
 - Python 3.11+
 - Node.js 18+
-- [Ollama](https://ollama.com) installed
+- Free HuggingFace token from [huggingface.co](https://huggingface.co/settings/tokens)
 
-### Step 1 — Install Ollama & Gemma 4
-```bash
-# Download Ollama from https://ollama.com
-# Then pull Gemma 4:
-ollama pull gemma4:e2b
-```
-
-### Step 2 — Start Ollama
-```bash
-ollama serve
-```
-
-### Step 3 — Backend
+### Step 1 — Backend
 ```bash
 cd backend
 pip install -r requirements.txt
+
+# Create .env file
+echo "HF_TOKEN=your_huggingface_token" > .env
+
 uvicorn main:app --reload --port 8000
 ```
 
-### Step 4 — Frontend
+### Step 2 — Frontend
 ```bash
 cd frontend
 npm install
@@ -71,8 +90,12 @@ npm run dev
 
 App runs at **http://localhost:5173**
 
-> ⚠️ **RAM Note:** Gemma 4 E2B requires ~8GB free RAM.
-> Close Chrome and heavy apps before running for best performance.
+### Optional — Run Gemma 4 Locally with Ollama
+```bash
+# Install Ollama from https://ollama.com
+ollama pull gemma4:e2b
+# Requires ~8GB free RAM. Close Chrome and heavy apps first.
+```
 
 ---
 
@@ -81,13 +104,13 @@ App runs at **http://localhost:5173**
 ```
 carbonmirror/
 ├── backend/
-│   ├── main.py              ← FastAPI + Gemma 4 Ollama integration
+│   ├── main.py                    ← FastAPI + Gemma 4 integration
 │   ├── requirements.txt
-│   └── .env                 ← environment config
+│   └── .env                       ← HF_TOKEN (never commit!)
 ├── frontend/
 │   ├── src/
-│   │   ├── App.jsx               ← routing + API call
-│   │   ├── index.css             ← global styles + animations
+│   │   ├── App.jsx                ← routing + API call
+│   │   ├── index.css              ← global styles + animations
 │   │   └── components/
 │   │       ├── InputForm.jsx      ← lifestyle input form
 │   │       ├── LoadingScreen.jsx  ← animated loading screen
@@ -96,7 +119,6 @@ carbonmirror/
 │   ├── package.json
 │   ├── vite.config.js
 │   └── tailwind.config.js
-├── carbonmirror_gemma4.ipynb  ← Kaggle Notebook (Gemma 4 + Gradio)
 ├── docker-compose.yml
 └── README.md
 ```
@@ -105,27 +127,12 @@ carbonmirror/
 
 ## 🤖 AI Model
 
-<<<<<<< HEAD
-### Web Application
-Uses **Gemma 4 E2B** (`gemma4:e2b`) running locally via **Ollama**.
-=======
-This project uses **Gemma 4 31B Instruct** (`gemma-4-31b-it`) via Google AI Studio.
->>>>>>> 616bcc2 (update main.py)
-
-- No API key required
-- Runs on local CPU/GPU
-- Full privacy — data never leaves your machine
-
-### Kaggle Notebook
-Uses **Gemma 4 26B A4B** (`google/gemma-4/transformers/gemma-4-26b-a4b`) running on Kaggle T4 GPU with full Gradio UI including:
-- Carbon Score Board
-- Before/After Comparison Chart
-- AI-Generated 30-Day Action Plan
+Uses **Gemma 4 31B Instruct** (`google/gemma-4-31B-it`) via **HuggingFace Router (DeepInfra provider)**.
 
 ### Key Prompt Techniques
-- **Ollama chat format** — `messages` with `role: user` structure
-- **City-specific context injection** — every prompt references exact location
-- **Three-layer JSON extraction** — robust fallback parser
+- **OpenAI-compatible chat format** — `messages` with `role: user`
+- **City-specific context injection** — every prompt references the user's exact location
+- **Three-layer JSON extraction** — robust fallback parser handles any model output
 - **Temperature 0.7** — balances creativity with factual grounding
 
 ---
@@ -135,39 +142,31 @@ Uses **Gemma 4 26B A4B** (`google/gemma-4/transformers/gemma-4-26b-a4b`) running
 | Layer | Technology |
 |-------|-----------|
 | Frontend | React 18, Tailwind CSS, Vite |
-<<<<<<< HEAD
 | Backend | FastAPI, Python 3.11, httpx (async) |
-| AI Model (Local) | Gemma 4 E2B via Ollama |
-| AI Model (Notebook) | Gemma 4 26B via Kaggle GPU |
-| Notebook UI | Gradio |
+| AI Model | Gemma 4 31B via HuggingFace Router (DeepInfra) |
 | Deployment | Vercel (frontend) + Render (backend) |
 
 ---
 
-## 🖥️ Alternative — Run with Ollama Cloud / HuggingFace
+## 🌐 Deploy to Production
 
-If you don't have enough RAM locally, you can use HuggingFace Router:
+### Backend → Render
+1. Go to [render.com](https://render.com) → New Web Service
+2. Connect GitHub repo → Root directory: `backend`
+3. Build: `pip install -r requirements.txt`
+4. Start: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+5. Add env variable: `HF_TOKEN=your_token`
 
-```python
-# In backend/main.py, replace Ollama config with:
-HF_TOKEN = "your_hf_token"
-HF_API_URL = "https://router.huggingface.co/v1/chat/completions"
-MODEL = "google/gemma-4-31B-it:novita"
-```
-
-Get free HuggingFace token at: https://huggingface.co/settings/tokens
-=======
-| Backend | FastAPI, Python 3.11 |
-| AI | Gemma 4 31B (Google AI Studio) |
-| HTTP Client | httpx (async) |
-| Deployment | Vercel (frontend) + Railway (backend) |
->>>>>>> 616bcc2 (update main.py)
+### Frontend → Vercel
+1. Go to [vercel.com](https://vercel.com) → Import repo
+2. Root directory: `frontend`
+3. Add env variable: `VITE_API_URL=https://your-backend.onrender.com`
 
 ---
 
 ## ⚠️ Important Notes
 
-- Gemma 4 E2B requires ~8GB free RAM — close other apps before running
+- Never commit `.env` file — add it to `.gitignore`
 - Results are AI-generated simulations, not scientific predictions
 - The `/analyze` endpoint has no rate limiting — add one before going public
 
