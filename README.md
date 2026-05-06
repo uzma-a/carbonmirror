@@ -5,6 +5,9 @@
 
 ---
 
+# Overview 🎯
+CarbonMirror turns abstract climate data into your personal story. Enter your lifestyle, and Gemma 4 AI simulates exactly what your daily life will look like in 2040 — vivid, local, and impossible to ignore.
+
 ## 🚨 The Problem
 
 Climate change is the defining crisis of our generation. Yet despite decades of warnings, global emissions continue to rise. **The data is overwhelming — but the action is not.**
