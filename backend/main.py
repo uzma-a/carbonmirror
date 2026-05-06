@@ -10,20 +10,13 @@ app = FastAPI(title="CarbonMirror API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-<<<<<<< HEAD
-=======
 
->>>>>>> 5dd031fb2193e3a504d5d2a58baeee345297c202
     allow_origins=["http://localhost:5173","http://localhost:3000","https://carbonmirror.vercel.app/", "*"],
     allow_methods=["POST","GET"],
     allow_headers=["*"],
 )
 
 GEMMA_API_KEY = os.getenv("GEMMA_API_KEY", "YOUR_GEMMA_API_KEY_HERE")
-<<<<<<< HEAD
-# gemma-4-31b-it: fast enough to avoid timeouts, still high quality
-=======
->>>>>>> 5dd031fb2193e3a504d5d2a58baeee345297c202
 GEMMA_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemma-4-31b-it:generateContent"
 
 class UserInput(BaseModel):
