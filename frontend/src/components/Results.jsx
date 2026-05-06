@@ -1,3 +1,4 @@
+import ScoreCard from './ScoreCard'
 import { useEffect, useRef, useState } from 'react'
 
 /* ── helpers ─────────────────────────────────────────── */
@@ -231,6 +232,11 @@ export default function Results({ data, onReset }) {
               {profile.risk_factors?.map(r => <Tag key={r} variant="risk">⚠ {r}</Tag>)}
             </div>
           </div>
+        </Reveal>
+
+        {/* Carbon Score Card */}
+        <Reveal delay={250}>
+          <ScoreCard score={data.carbon_score} />
         </Reveal>
 
         {/* Divider with label */}

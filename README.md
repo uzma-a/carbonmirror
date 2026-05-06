@@ -5,22 +5,17 @@
 
 ---
 
-## 🔗 Links
-- 🌐 **Live Web App:** https://carbonmirror.vercel.app
-- 🤖 **Kaggle Notebook (Gemma 4):** https://kaggle.com/your-notebook-link
-- 📹 **Demo Video:** https://youtube.com/your-video-link
-- 📦 **GitHub:** https://github.com/uzma-a/carbonmirror
-
----
-
 ## 🏗️ Architecture
 
 ```
 Browser (React + Tailwind + Vite)
         ↓  POST /analyze
 FastAPI Backend (Python)
+
         ↓  Gemma 4 E2B (Ollama — local inference)
 Local GPU/CPU
+        ↓  Gemma 4 12B API (Google AI Studio)
+Google Generative AI
         ↓  Structured JSON response
 React renders animated staggered results
 ```
@@ -110,8 +105,12 @@ carbonmirror/
 
 ## 🤖 AI Model
 
+<<<<<<< HEAD
 ### Web Application
 Uses **Gemma 4 E2B** (`gemma4:e2b`) running locally via **Ollama**.
+=======
+This project uses **Gemma 4 31B Instruct** (`gemma-4-31b-it`) via Google AI Studio.
+>>>>>>> 616bcc2 (update main.py)
 
 - No API key required
 - Runs on local CPU/GPU
@@ -136,6 +135,7 @@ Uses **Gemma 4 26B A4B** (`google/gemma-4/transformers/gemma-4-26b-a4b`) running
 | Layer | Technology |
 |-------|-----------|
 | Frontend | React 18, Tailwind CSS, Vite |
+<<<<<<< HEAD
 | Backend | FastAPI, Python 3.11, httpx (async) |
 | AI Model (Local) | Gemma 4 E2B via Ollama |
 | AI Model (Notebook) | Gemma 4 26B via Kaggle GPU |
@@ -156,6 +156,12 @@ MODEL = "google/gemma-4-31B-it:novita"
 ```
 
 Get free HuggingFace token at: https://huggingface.co/settings/tokens
+=======
+| Backend | FastAPI, Python 3.11 |
+| AI | Gemma 4 31B (Google AI Studio) |
+| HTTP Client | httpx (async) |
+| Deployment | Vercel (frontend) + Railway (backend) |
+>>>>>>> 616bcc2 (update main.py)
 
 ---
 
